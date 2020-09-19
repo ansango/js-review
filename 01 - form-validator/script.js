@@ -20,3 +20,4 @@ const email = document.getElementById("email");
 const password = document.getElementById("password");
 const password2 = document.getElementById("password2");
 
+console.log (form) 
