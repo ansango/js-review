@@ -65,6 +65,58 @@ function checkRequired(inputArr) {
 }
 
 /**
+ * * Check Input Length Function
+ * @param input
+ * @param min
+ * @param max
+ * */
+
+function checkLength(input, min, max) {
+  if (input.value.length < min) {
+    showError(
+      input,
+      `${getFieldName(input)} must be at least ${min} characters`
+    );
+  } else if (input.value.length > max) {
+    showError(
+      input,
+      `${getFieldName(input)} must be less than ${max} characters`
+    );
+  } else {
+    showSuccess(input);
+  }
+}
+
+/**
+ * * Check Email Function
+ * @param input
+ * */
+
+function checkEmail(input) {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (re.test(input.value.trim())) {
+    showSuccess(input);
+  } else {
+    showError(input, "Email is not valid");
+  }
+}
+
+/**
+ * * Check Password Function
+ * @param input1
+ * @param input2
+ * */
+
+function checkValidPasswordsMatch(input1, input2) {
+  const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/;
+  if (!re.test(input1.value.trim())) {
+    showError(input1, "Must be lower, upper case and special char");
+  } else if (input1.value !== input2.value) {
+    showError(input2, "Passwords do not match");
+  }
+}
+
+/**
  * * Get Field Name Function
  * @param input
  * */
@@ -83,4 +135,9 @@ form.addEventListener("click", function (event) {
   // * llamamos a la funcion de validacion que acepta un array de inputs
 
   checkRequired([username, email, password, password2]);
+
+  checkLength(username, 3, 15);
+  checkLength(password, 6, 25);
+  checkEmail(email);
+  checkValidPasswordsMatch(password, password2);
 });
